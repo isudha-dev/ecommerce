@@ -1,4 +1,4 @@
-package dev.sudha.productcatalog.dtos;
+package dev.sudha.productcatalog.thirdpartyclients.productservice.fakestore;
 
 import lombok.Getter;
 import lombok.Setter;

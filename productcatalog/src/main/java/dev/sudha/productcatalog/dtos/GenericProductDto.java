@@ -9,7 +9,7 @@ public class GenericProductDto {
     private Long id;
     private String title;
     private String description;
-    private String image;
+    private String imageUrl;
     private String category;
     private double price;
 

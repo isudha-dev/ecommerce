@@ -17,15 +17,15 @@ public class FakeStoreProductServiceClient {
 
     private RestTemplateBuilder restTemplateBuilder;
     private RestTemplate restTemplate;
+    private String productIdRequestURL;
 
-    private String productIdRequestURL = "https://fakestoreapi.com/products/{id}";
+    private String productRequestURL;
 
-    @Value("${fakeStore.url}")
-    private String productRequestURL = "https://fakestoreapi.com/products";
-
-    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder){
+    public FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder, @Value("${fakeStore.url}") String fakeStoreUrl, @Value("${fakeStore.api.product.path}")String fakeStoreApiProductPath){
         this.restTemplateBuilder = restTemplateBuilder;
         restTemplate = restTemplateBuilder.build();
+        this.productIdRequestURL = fakeStoreUrl + fakeStoreApiProductPath + "/{id}";
+        this.productRequestURL = fakeStoreUrl + fakeStoreApiProductPath;
     }
 
     public FakeStoreProductDto getProductById(final Long id) throws NotFoundException {

@@ -1,6 +1,7 @@
 package dev.sudha.productcatalog.controllers;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +21,28 @@ import dev.sudha.productcatalog.services.ProductService;
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    //    Field injection: This kind of dependency injection is not recommended.
-    //    @Autowired
-    //    @Value("${productservice.type}")
+    /*
+        Field injection: This kind of dependency injection is not recommended.
+        @Autowired
+        @Value("${productservice.type}")
+    */
     private ProductService productService;
 
-    // controller injecting
-    // may not work in case of cyclic dependency
-    public ProductController(@Qualifier("FakeStoreProductService") ProductService productService){
+    /*
+        controller injecting
+        may not work in case of cyclic dependency
+
+        @Qualifier("FakeStoreProductService") to replace @primary
+        @primary is used to mark a bean/object as default
+        @Qualifier allows you to specially mark a particular object you need
+        if both mentioned, @Qualifier is used
+    */
+    public ProductController(@Qualifier("SelfProductService") ProductService productService){
         this.productService = productService;
     }
 
-    // Setter injection: This is also not recommended
     /*
+    Setter injection: This is also not recommended
     @Autowired
     public void setProductService(ProductService productService){
         this.productService = productService;
@@ -56,12 +66,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public GenericProductDto createProduct(@RequestBody FakeStoreProductDto product){
+    public GenericProductDto createProduct(@RequestBody GenericProductDto product){
         return productService.createProduct(product);
     }
 
     @PutMapping("{id}")
-    public GenericProductDto updateProductById(@PathVariable("id") Long id, @RequestBody FakeStoreProductDto product){
+    public GenericProductDto updateProductById(@PathVariable("id") Long id, @RequestBody GenericProductDto product){
         return productService.updateProductById(id, product);
     }
 

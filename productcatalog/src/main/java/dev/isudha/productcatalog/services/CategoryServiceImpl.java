@@ -19,9 +19,10 @@ public class CategoryServiceImpl implements CategoryService{
         this.categoryRepo = categoryRepo;
     }
 
-    @Override public Category createCategory(final String name) {
+    @Override public GetCategoryDto createCategory(final String name) {
         Category category = new Category(name);
-        return categoryRepo.save(category);
+        categoryRepo.save(category);
+        return convertCategoryToCategoryDto(category);
     }
     @Override
     public GetCategoryDto findById(final Long id) {
@@ -29,8 +30,14 @@ public class CategoryServiceImpl implements CategoryService{
         return convertCategoryToCategoryDto(category);
     }
 
-    @Override public List<Category> findAllCategories() {
-        return categoryRepo.findAll();
+    @Override public List<GetCategoryDto> findAllCategories() {
+        List<Category> categories = categoryRepo.findAll();
+        List<GetCategoryDto> categoryDtos = new ArrayList<>();
+        for(Category category: categories){
+            GetCategoryDto categoryDto = convertCategoryToCategoryDto(category);
+            categoryDtos.add(categoryDto);
+        }
+        return categoryDtos;
     }
 
     private GetCategoryDto convertCategoryToCategoryDto(Category category){

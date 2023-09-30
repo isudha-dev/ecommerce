@@ -9,10 +9,10 @@ import dev.isudha.productcatalog.repositories.CategoryRepo;
 @Service
 public interface CategoryService {
 
-    Category createCategory(String name);
+    GetCategoryDto createCategory(String name);
 
     GetCategoryDto findById(Long id);
 
-    List<Category> findAllCategories();
+    List<GetCategoryDto> findAllCategories();
 
 }

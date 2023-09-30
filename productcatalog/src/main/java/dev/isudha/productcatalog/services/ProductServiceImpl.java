@@ -47,9 +47,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public GetProductDto deleteProductById(Long id) {
-        Product deletedProduct = productRepo.deleteProductById(id);
-        return convertProductToProductDto(deletedProduct);
+    public void deleteProductById(Long id) {
+        productRepo.deleteById(id);
     }
     @Override
     public GetProductDto updateProductById(final Long id, CreateProductDto productDto) {

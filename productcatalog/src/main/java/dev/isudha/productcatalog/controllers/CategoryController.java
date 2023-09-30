@@ -24,8 +24,8 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody String name){
-        ResponseEntity<Category> response = new ResponseEntity<>(categoryService.createCategory(name), HttpStatus.CREATED);
+    public ResponseEntity<GetCategoryDto> createCategory(@RequestBody String name){
+        ResponseEntity<GetCategoryDto> response = new ResponseEntity<>(categoryService.createCategory(name), HttpStatus.CREATED);
         return response;
     }
 
@@ -37,8 +37,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAllCategories(){
-        ResponseEntity<List<Category>> response = new ResponseEntity<>(categoryService.findAllCategories(), HttpStatus.OK);
+    public ResponseEntity<List<GetCategoryDto>> findAllCategories(){
+        ResponseEntity<List<GetCategoryDto>> response = new ResponseEntity<>(categoryService.findAllCategories(), HttpStatus.OK);
             return response;
     }
 

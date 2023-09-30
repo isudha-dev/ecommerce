@@ -61,9 +61,10 @@ public class ProductController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<GetProductDto> deleteProductById(@PathVariable("id") Long id) throws NotFoundException {
+    public ResponseEntity<String> deleteProductById(@PathVariable("id") Long id) throws NotFoundException {
         // modifying response entity by adding specific status code. you can also add headers here.
-        ResponseEntity<GetProductDto> response = new ResponseEntity<>(productService.deleteProductById(id), HttpStatus.NOT_FOUND);
+        productService.deleteProductById(id);
+        ResponseEntity<String> response = new ResponseEntity<>("Product deleted successfully", HttpStatus.OK);
         return response;
     }
 

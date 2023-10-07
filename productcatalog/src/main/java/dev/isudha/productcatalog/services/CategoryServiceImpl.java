@@ -47,6 +47,9 @@ public class CategoryServiceImpl implements CategoryService{
 
         List<Product> products = category.getProducts();
         List<GetProductDto> productDtos = new ArrayList<>();
+        if(products == null){
+            return categoryDto;
+        }
         for(Product product: products){
             GetProductDto productDto = new GetProductDto();
             productDto.setId(product.getId());

@@ -36,7 +36,7 @@ public class ProductController {
         @Qualifier allows you to specially mark a particular object you need
         if both mentioned, @Qualifier is used
     */
-    public ProductController(@Qualifier("ProductService") ProductService productService){
+    public ProductController(ProductService productService){
         this.productService = productService;
     }
 

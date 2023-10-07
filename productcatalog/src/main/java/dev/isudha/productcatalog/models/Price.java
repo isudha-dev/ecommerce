@@ -1,5 +1,6 @@
 package dev.isudha.productcatalog.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -14,12 +15,12 @@ import lombok.Setter;
 public class Price extends BaseModel {
     private String currency;
     private double amount;
-//    @OneToOne
-//    private Product product;
+    @OneToOne(mappedBy = "price", cascade = CascadeType.ALL)
+    private Product product;
 
-//    public Price(String currency, double amount){
-//        this.amount = amount;
-//        this.currency = currency;
-//    }
+    public Price(String currency, double amount){
+        this.amount = amount;
+        this.currency = currency;
+    }
 
 }

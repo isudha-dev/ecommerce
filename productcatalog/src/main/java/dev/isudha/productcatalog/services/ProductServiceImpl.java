@@ -25,7 +25,8 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<GetProductDto> getAllProducts() {
-        List<Product> allProducts = productRepo.findAll();
+//        List<Product> allProducts = productRepo.findAll();
+        List<Product> allProducts = productRepo.findAllProducts();
         List<GetProductDto> genericProductList = new ArrayList<>();
         for(Product product: allProducts){
             genericProductList.add(convertProductToProductDto(product));

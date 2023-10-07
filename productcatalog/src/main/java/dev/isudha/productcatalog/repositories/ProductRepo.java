@@ -15,6 +15,10 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     @Override
     List<Product> findAll();
 
+    @Query(value = "select p from Product p right join p.price pr where p.price.id = pr.id")
+//    @Query(value = "select p.id as productId, p.title, p.description, p.image_url, pr.id as priceId, pr.currency, pr.amount from product p left join price pr on p.price_id = pr.id", nativeQuery = true)
+    List<Product> findAllProducts();
+
     @Override
     void deleteById(Long id);
     Product findByTitleEquals(String title);

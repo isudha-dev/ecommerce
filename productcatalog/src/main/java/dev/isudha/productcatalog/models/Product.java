@@ -22,6 +22,7 @@ public class Product extends BaseModel {
     @JoinColumn(name = "category_id")
     private Category category;
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "price_id")
     @Fetch(FetchMode.JOIN)
     private Price price;
     private int inventoryCount;

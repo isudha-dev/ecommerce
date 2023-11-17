@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import dev.isudha.productcatalog.dtos.GetCategoryDto;
-import dev.isudha.productcatalog.models.Category;
-import dev.isudha.productcatalog.models.Product;
 import dev.isudha.productcatalog.services.CategoryService;
 
 @Controller

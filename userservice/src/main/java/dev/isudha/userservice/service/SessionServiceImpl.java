@@ -37,12 +37,12 @@ public class SessionServiceImpl implements SessionService {
     @Override
     public Session createSession(String userEmail) {
         //        String token = RandomStringUtils.randomAlphabetic(32);
-        User user = userRepository.findByEmail(userEmail);
-        String token = generateToken(user);
-
-        if (user == null) {
+        Optional<User> userOptional = userRepository.findByEmail(userEmail);
+        if (userOptional.isEmpty()) {
             throw new RuntimeException("User does not exist");
         }
+        User user = userOptional.get();
+        String token = generateToken(user);
 
         Session newSession = new Session(token, user, SessionState.ACTIVE);
         sessionRepo.save(newSession);
@@ -61,7 +61,12 @@ public class SessionServiceImpl implements SessionService {
         // reading claims from JWT
         Jws<Claims> claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(session.get().getToken());
         String email = (String) claims.getPayload().get("email");
-        boolean validUserId = userRepository.findByEmail(email).getId().equals(sessionDto.getUserId());
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("Session service: User does not exist for give email");
+        }
+        User user = userOptional.get();
+        boolean validUserId = user.getId().equals(sessionDto.getUserId());
 
         Integer expiryDate = (Integer) claims.getPayload().get("expiryAt");
         Long currentDate = LocalDate.now().toEpochDay();

@@ -1,5 +1,6 @@
 package dev.isudha.userservice.service;
 
+import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import dev.isudha.userservice.dto.SessionDto;
@@ -36,23 +37,23 @@ public class AuthServiceImpl implements AuthService {
         return userDto;
     }
     @Override
-    public SessionDto loginUser(final UserRequestDto user) {
-        User user1 = userRepo.findByEmail(user.getEmail());
-        if (user1 == null) {
+    public SessionDto loginUser(final UserRequestDto userDto) {
+        Optional<User> userOptional = userRepo.findByEmail(userDto.getEmail());
+        if (userOptional.isEmpty()) {
             // you can create new user if user does not exist
             // createUser(new UserRequestDto(user.getEmail(), user.getPassword()));
             // return loginUser(user);
             throw new RuntimeException("Authentication service: User not found");
         }
-
-        String dbPassword = user1.getPassword();
+        User user = userOptional.get();
+        String dbPassword = user.getPassword();
         if (!passwordEncoder.matches(user.getPassword(), dbPassword)) {
             throw new RuntimeException("Authentication service: Password does not match");
         }
 
-        Session session = sessionService.searchSession(user1.getEmail());
+        Session session = sessionService.searchSession(user.getEmail());
         if (session == null || !session.getState().equals(SessionState.ACTIVE))
-            session = sessionService.createSession(user1.getEmail());
+            session = sessionService.createSession(user.getEmail());
         SessionDto sessionDto = SessionDto.from(session);
         return sessionDto;
     }

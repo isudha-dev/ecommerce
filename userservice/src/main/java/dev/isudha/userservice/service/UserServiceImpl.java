@@ -31,7 +31,11 @@ public class UserServiceImpl implements UserService {
         return user1.get();
     }
     @Override public User findByEmail(final String email) {
-        return userRepository.findByEmail(email);
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("Session service: User does not exist for give email");
+        }
+        return userOptional.get();
     }
 
     @Override public User findById(Long id) {

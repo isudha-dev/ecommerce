@@ -2,9 +2,11 @@ package dev.isudha.productcatalog.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import dev.isudha.productcatalog.dtos.CreateProductDto;
 import dev.isudha.productcatalog.dtos.GetPriceDto;
+import dev.isudha.productcatalog.exceptions.NotFoundException;
 import dev.isudha.productcatalog.models.Category;
 import dev.isudha.productcatalog.models.Price;
 import dev.isudha.productcatalog.models.Product;
@@ -35,9 +37,12 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public GetProductDto getProductById(Long id) {
-        Product product = productRepo.findById(id).get();
-        return convertProductToProductDto(product);
+    public GetProductDto getProductById(Long id) throws NotFoundException {
+        Optional<Product> productOptional = productRepo.findById(id);
+        if(productOptional.isEmpty()){
+            throw new NotFoundException("Product not found with id: "+id);
+        }
+        return convertProductToProductDto(productOptional.get());
     }
     @Override
     public GetProductDto createProduct(CreateProductDto product) {

@@ -7,7 +7,7 @@ import dev.isudha.productcatalog.dtos.GetProductDto;
 
 public interface ProductService {
 
-    GetProductDto getProductById(Long id);
+    GetProductDto getProductById(Long id) throws NotFoundException;
 
     GetProductDto createProduct(CreateProductDto product);
 

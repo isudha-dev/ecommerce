@@ -40,7 +40,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    void throwExceptionWhenProductDoesntExist(){
+    void throwExceptionWhenProductDoesntExist() throws NotFoundException {
         when(productService.getProductById(121l))
             .thenReturn(null);
         GetProductDto getProductDto;
@@ -53,7 +53,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    void returnTitleAsAbcWhenProductIDIs1(){
+    void returnTitleAsAbcWhenProductIDIs1() throws NotFoundException {
         GetProductDto getProductDto = new GetProductDto();
         getProductDto.setTitle("Abc");
         when(
